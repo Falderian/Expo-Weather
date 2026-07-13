@@ -52,7 +52,7 @@ export const SearchLocation = ({ addLocationToFavorite }: Props) => {
 				)}
 				{results.length > 0 && (
 					<ScrollView style={styles.resultsScroll}>
-						{results.map((loc, i) => (
+						{results.map((loc) => (
 							<Pressable key={loc.id} style={styles.resultRow}>
 								<View style={styles.resultInfo}>
 									<ThemedText type="default">{loc.name}</ThemedText>

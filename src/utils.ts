@@ -1,3 +1,5 @@
+/** biome-ignore-all lint/suspicious/noExplicitAny: <Generic debounce function> */
+
 export function debounce<T extends (...args: any[]) => any>(
 	func: T,
 	delay: number,
