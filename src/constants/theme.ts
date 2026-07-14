@@ -14,6 +14,7 @@ export const Colors = {
 		backgroundElement: "#F0F0F3",
 		backgroundSelected: "#E0E1E6",
 		textSecondary: "#60646C",
+		active: "#007AFF",
 	},
 	dark: {
 		text: "#ffffff",
@@ -21,6 +22,7 @@ export const Colors = {
 		backgroundElement: "#212225",
 		backgroundSelected: "#2E3135",
 		textSecondary: "#B0B4BA",
+		active: "#0A84FF",
 	},
 } as const;
 
@@ -28,13 +30,9 @@ export type ThemeColor = keyof typeof Colors.light & keyof typeof Colors.dark;
 
 export const Fonts = Platform.select({
 	ios: {
-		/** iOS `UIFontDescriptorSystemDesignDefault` */
 		sans: "system-ui",
-		/** iOS `UIFontDescriptorSystemDesignSerif` */
 		serif: "ui-serif",
-		/** iOS `UIFontDescriptorSystemDesignRounded` */
 		rounded: "ui-rounded",
-		/** iOS `UIFontDescriptorSystemDesignMonospaced` */
 		mono: "ui-monospace",
 	},
 	default: {

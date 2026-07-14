@@ -4,7 +4,7 @@ class Api {
 	forecastUrl = "https://api.open-meteo.com/v1/forecast";
 	searchLoactionUrl = "https://geocoding-api.open-meteo.com/v1/search";
 
-	getCurrentWeatherurl(latitude: number, longitude: string) {
+	getCurrentWeatherurl(latitude: number, longitude: number) {
 		return `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,precipitation,rain,weather_code,relative_humidity_2m`;
 	}
 }

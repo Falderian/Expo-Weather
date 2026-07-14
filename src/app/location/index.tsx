@@ -2,7 +2,8 @@ import { Text, useNativeState } from "@expo/ui";
 import { StyleSheet, View } from "react-native";
 import { Header } from "@/components/header";
 import { IconButton } from "@/components/icon-button";
-import { SearchLocation } from "@/components/searchLocations";
+import { FavoriteRow } from "@/components/location/favorit-row";
+import { SearchLocation } from "@/components/location/search-locations";
 import type { TLocation } from "@/types";
 
 const Location = () => {
@@ -18,6 +19,7 @@ const Location = () => {
 				rightSlots={
 					<IconButton
 						name="map-search"
+						isActive={openSearch.value}
 						size={20}
 						onPress={() => {
 							openSearch.value = !openSearch.value;
@@ -26,16 +28,12 @@ const Location = () => {
 				}
 			/>
 			{openSearch.value ? (
-				<SearchLocation
-					addLocationToFavorite={(location: TLocation) =>
-						favoriteLocations.value.unshift(location)
-					}
-				/>
+				<SearchLocation favoriteLocations={favoriteLocations} />
 			) : (
 				<View>
-					{favoriteLocations.value.map((loc) => {
-						return <Text key={loc.id}>{loc.name}</Text>;
-					})}
+					{favoriteLocations.value.map((loc) => (
+						<FavoriteRow key={loc.id} location={loc} />
+					))}
 				</View>
 			)}
 		</View>
