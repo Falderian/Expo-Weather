@@ -4,6 +4,7 @@ import { Header } from "@/components/header";
 import { IconButton } from "@/components/icon-button";
 import { FavoriteRow } from "@/components/location/favorite-row";
 import { SearchLocation } from "@/components/location/search-locations";
+import { ThemedView } from "@/components/themed-view";
 import { useFavoriteLocations } from "@/hooks/use-favorite-locations";
 
 const LocationScreen = () => {
@@ -12,7 +13,7 @@ const LocationScreen = () => {
 	const { favoriteLocations, removeFavorite } = useFavoriteLocations();
 
 	return (
-		<View style={styles.container}>
+		<ThemedView style={styles.container}>
 			<Header
 				title="Select city"
 				showBack
@@ -30,7 +31,7 @@ const LocationScreen = () => {
 			{openSearch.value ? (
 				<SearchLocation />
 			) : (
-				<View>
+				<View style={styles.favoritesList}>
 					{favoriteLocations.map((loc) => (
 						<FavoriteRow
 							key={loc.id}
@@ -40,7 +41,7 @@ const LocationScreen = () => {
 					))}
 				</View>
 			)}
-		</View>
+		</ThemedView>
 	);
 };
 
@@ -48,7 +49,10 @@ export default LocationScreen;
 
 const styles = StyleSheet.create({
 	container: {
-		display: "flex",
+		flex: 1,
 		gap: 10,
+	},
+	favoritesList: {
+		flex: 1,
 	},
 });

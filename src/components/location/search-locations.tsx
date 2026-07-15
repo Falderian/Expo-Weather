@@ -65,7 +65,7 @@ export const SearchLocation = () => {
 	};
 
 	return (
-		<>
+		<View style={styles.container}>
 			<TextInput
 				value={query}
 				placeholder="City name…"
@@ -74,7 +74,7 @@ export const SearchLocation = () => {
 				placeholderTextColor={Colors.dark.textSecondary}
 				autoFocus
 			/>
-			<View>
+			<View style={styles.resultsContainer}>
 				{isError && (
 					<View style={styles.status}>
 						<ThemedText themeColor="textSecondary">
@@ -93,11 +93,15 @@ export const SearchLocation = () => {
 					</ScrollView>
 				)}
 			</View>
-		</>
+		</View>
 	);
 };
 
 const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		gap: 10,
+	},
 	searchInput: {
 		fontSize: 16,
 		paddingHorizontal: Spacing.two,
@@ -109,6 +113,9 @@ const styles = StyleSheet.create({
 		outlineColor: Colors.light.active,
 	},
 
+	resultsContainer: {
+		flex: 1,
+	},
 	status: {
 		alignItems: "center",
 		paddingTop: Spacing.five,

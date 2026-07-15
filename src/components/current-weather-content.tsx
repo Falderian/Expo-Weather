@@ -10,26 +10,9 @@ import { useCurrentLocation } from "@/hooks/use-current-location";
 import { useLocationCurrWeather } from "@/hooks/use-location-current-weather";
 import { useTheme } from "@/hooks/use-theme";
 import type { IconName } from "@/types";
-import { WeatherCodes, WeatherIcons } from "@/utils";
+import { fmtTime, relativeTime, WeatherCodes, WeatherIcons } from "@/utils";
 
 const ROW_SIZE = 3;
-
-const fmtTime = (d: Date) =>
-	d.toLocaleTimeString(undefined, {
-		hour: "numeric",
-		minute: "2-digit",
-	});
-
-const relativeTime = (timestamp: number): string => {
-	const seconds = Math.floor((Date.now() - timestamp) / 1000);
-	if (seconds < 60) return "just now";
-	const minutes = Math.floor(seconds / 60);
-	if (minutes < 60) return `${minutes}m ago`;
-	const hours = Math.floor(minutes / 60);
-	if (hours < 24) return `${hours}h ago`;
-	const days = Math.floor(hours / 24);
-	return `${days}d ago`;
-};
 
 export const CurrentWeatherContent = () => {
 	const theme = useTheme();
@@ -144,37 +127,20 @@ export const CurrentWeatherContent = () => {
 	return (
 		<ThemedView style={styles.container}>
 			<MaterialDesignIcons name={icon} size={96} color={theme.text} />
-
 			<ThemedText type="title">
 				{c.temperature_2m}
 				{u.temperature_2m}
 			</ThemedText>
-
 			<ThemedText themeColor="textSecondary" style={styles.condition}>
 				{condition}
 			</ThemedText>
-
 			<ThemedText themeColor="textSecondary" style={styles.date}>
 				{formattedTime}, {formattedDate}
 			</ThemedText>
-
 			<ThemedText themeColor="textSecondary" style={styles.feelsLike}>
 				Feels like {c.apparent_temperature}
 				{u.temperature_2m}
 			</ThemedText>
-
-			<View style={styles.updatedRow}>
-				<ThemedText themeColor="textSecondary" style={styles.updatedText}>
-					Updated {relativeTime(dataUpdatedAt)}
-				</ThemedText>
-				<IconButton
-					name="refresh"
-					size={16}
-					onPress={() => refetch()}
-					disabled={isFetching}
-				/>
-			</View>
-
 			<ThemedView style={styles.details} type="backgroundElement">
 				{rows.map((row) => (
 					<View style={styles.detailRow} key={row[0].label}>
@@ -189,6 +155,17 @@ export const CurrentWeatherContent = () => {
 					</View>
 				))}
 			</ThemedView>
+			<View style={styles.updatedRow}>
+				<ThemedText themeColor="textSecondary" style={styles.updatedText}>
+					Updated {relativeTime(dataUpdatedAt)}
+				</ThemedText>
+				<IconButton
+					name="refresh"
+					size={16}
+					onPress={() => refetch()}
+					disabled={isFetching}
+				/>
+			</View>
 		</ThemedView>
 	);
 };
