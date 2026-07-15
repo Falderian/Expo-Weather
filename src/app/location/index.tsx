@@ -1,15 +1,15 @@
-import { Text, useNativeState } from "@expo/ui";
+import { useNativeState } from "@expo/ui";
 import { StyleSheet, View } from "react-native";
 import { Header } from "@/components/header";
 import { IconButton } from "@/components/icon-button";
-import { FavoriteRow } from "@/components/location/favorit-row";
+import { FavoriteRow } from "@/components/location/favorite-row";
 import { SearchLocation } from "@/components/location/search-locations";
-import type { TLocation } from "@/types";
+import { useFavoriteLocations } from "@/hooks/use-favorite-locations";
 
-const Location = () => {
+const LocationScreen = () => {
 	const openSearch = useNativeState(false);
 
-	const favoriteLocations = useNativeState<TLocation[]>([]);
+	const { favoriteLocations, removeFavorite } = useFavoriteLocations();
 
 	return (
 		<View style={styles.container}>
@@ -28,11 +28,15 @@ const Location = () => {
 				}
 			/>
 			{openSearch.value ? (
-				<SearchLocation favoriteLocations={favoriteLocations} />
+				<SearchLocation />
 			) : (
 				<View>
-					{favoriteLocations.value.map((loc) => (
-						<FavoriteRow key={loc.id} location={loc} />
+					{favoriteLocations.map((loc) => (
+						<FavoriteRow
+							key={loc.id}
+							location={loc}
+							removeFavorite={() => removeFavorite(loc.id)}
+						/>
 					))}
 				</View>
 			)}
@@ -40,7 +44,7 @@ const Location = () => {
 	);
 };
 
-export default Location;
+export default LocationScreen;
 
 const styles = StyleSheet.create({
 	container: {
