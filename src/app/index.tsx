@@ -1,6 +1,7 @@
 import { Link } from "expo-router";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Header } from "@/components/header";
+import { HomeContent } from "@/components/home-content";
 import { IconButton } from "@/components/icon-button";
 import { useCurrentLocation } from "@/hooks/use-current-location";
 
@@ -8,7 +9,7 @@ export default function HomeScreen() {
 	const { currentLocation } = useCurrentLocation();
 
 	return (
-		<View>
+		<View style={styles.container}>
 			<Header
 				title={currentLocation?.name || "-"}
 				subtitle="Current Location"
@@ -18,6 +19,13 @@ export default function HomeScreen() {
 					</Link>
 				}
 			/>
+			<HomeContent />
 		</View>
 	);
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
+});
