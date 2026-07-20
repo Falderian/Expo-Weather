@@ -8,7 +8,8 @@
 		"scheme": "expoweather",
 		"userInterfaceStyle": "automatic",
 		"ios": {
-			"icon": "./assets/expo.icon"
+			"icon": "./assets/expo.icon",
+			"bundleIdentifier": "com.falderian.ExpoWeather"
 		},
 		"android": {
 			"adaptiveIcon": {

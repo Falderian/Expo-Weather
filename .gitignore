@@ -38,8 +38,11 @@ yarn-error.*
 
 example
 
-# generated native folders
-/ios
-/android
+# IDE
+.idea/
 
 .env
+
+
+android
+ios
