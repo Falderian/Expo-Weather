@@ -97,3 +97,17 @@ export const relativeTime = (timestamp: number): string => {
 	const days = Math.floor(hours / 24);
 	return `${days}d ago`;
 };
+
+const TEMP_COLD = 10;
+const TEMP_HOT = 25;
+
+export const getTempColor = (
+	temp: number,
+	colors: { cold: string; hot: string; mid: string },
+) => {
+	if (temp <= TEMP_COLD) return colors.cold;
+	if (temp >= TEMP_HOT) return colors.hot;
+	return colors.mid;
+};
+
+export { PRECIP_WARNING_THRESHOLD } from "@/constants/theme";

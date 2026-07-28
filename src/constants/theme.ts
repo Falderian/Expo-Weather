@@ -15,6 +15,10 @@ export const Colors = {
 		backgroundSelected: "#E0E1E6",
 		textSecondary: "#60646C",
 		active: "#007AFF",
+		accentPurple: "#6d6daa",
+		accentCyan: "#06b6d4",
+		tempCold: "#0ea5e9",
+		tempHot: "#f43f5e",
 	},
 	dark: {
 		text: "#ffffff",
@@ -23,6 +27,10 @@ export const Colors = {
 		backgroundSelected: "#2E3135",
 		textSecondary: "#B0B4BA",
 		active: "#0A84FF",
+		accentPurple: "#9d9dc8",
+		accentCyan: "#22d3ee",
+		tempCold: "#38bdf8",
+		tempHot: "#fb7185",
 	},
 } as const;
 
@@ -61,3 +69,12 @@ export const Spacing = {
 
 export const BottomTabInset = Platform.select({ ios: 50, android: 80 }) ?? 0;
 export const MaxContentWidth = 800;
+
+export const rgba = (hex: string, alpha: number): string => {
+	const r = parseInt(hex.slice(1, 3), 16);
+	const g = parseInt(hex.slice(3, 5), 16);
+	const b = parseInt(hex.slice(5, 7), 16);
+	return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+};
+
+export const PRECIP_WARNING_THRESHOLD = 30;

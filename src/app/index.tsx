@@ -5,20 +5,20 @@ import { IconButton } from "@/components/icon-button";
 import { useCurrentLocation } from "@/hooks/use-current-location";
 
 export default function HomeScreen() {
-  const { currentLocation } = useCurrentLocation();
+	const { currentLocation } = useCurrentLocation();
 
-  return (
-    <>
-      <Header
-        title={currentLocation?.name || "-"}
-        subtitle="Current Location"
-        rightSlots={
-          <Link href="/location">
-            <IconButton name="cog" size={20} />
-          </Link>
-        }
-      />
-      <HomeContent />
-    </>
-  );
+	return (
+		<>
+			<Header
+				title={currentLocation?.name || "-"}
+				subtitle="Current Location"
+				rightSlots={
+					<Link href="/location">
+						<IconButton name="cog" size={20} />
+					</Link>
+				}
+			/>
+			<HomeContent />
+		</>
+	);
 }

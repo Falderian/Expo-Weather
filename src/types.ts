@@ -96,3 +96,55 @@ export type TForecastResponse = {
 };
 
 export type IconName = ComponentProps<typeof MaterialDesignIcons>["name"];
+
+export type HourlyItem = {
+	time: Date;
+	temperature: number;
+	apparentTemperature: number;
+	precipitationProbability: number;
+	precipitation: number;
+	weatherCode: number;
+	windSpeed: number;
+};
+
+export type TDailyForecast = {
+	time: string[];
+	weather_code: number[];
+	temperature_2m_max: number[];
+	temperature_2m_min: number[];
+	apparent_temperature_max: number[];
+	apparent_temperature_min: number[];
+	precipitation_sum: number[];
+	precipitation_probability_max: number[];
+	sunrise: string[];
+	sunset: string[];
+	wind_speed_10m_max: number[];
+	wind_gusts_10m_max: number[];
+};
+
+export type TDailyForecastResponse = {
+	latitude: number;
+	longitude: number;
+	elevation: number;
+	generationtime_ms: number;
+	utc_offset_seconds: number;
+	timezone: string;
+	timezone_abbreviation: string;
+	daily_units?: Record<string, string>;
+	daily: TDailyForecast;
+};
+
+export type DailyItem = {
+	time: string;
+	weatherCode: number;
+	tempMax: number;
+	tempMin: number;
+	feelsLikeMax: number;
+	feelsLikeMin: number;
+	precipitationSum: number;
+	precipitationProbability: number;
+	windSpeedMax: number;
+	windGustsMax: number;
+	sunrise: Date;
+	sunset: Date;
+};

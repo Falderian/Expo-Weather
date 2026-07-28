@@ -16,12 +16,12 @@ export type ThemedTextProps = TextProps & {
 	themeColor?: ThemeColor;
 };
 
-export function ThemedText({
+export const ThemedText = ({
 	style,
 	type = "default",
 	themeColor,
 	...rest
-}: ThemedTextProps) {
+}: ThemedTextProps) => {
 	const theme = useTheme();
 
 	return (
@@ -41,7 +41,7 @@ export function ThemedText({
 			{...rest}
 		/>
 	);
-}
+};
 
 const styles = StyleSheet.create({
 	small: {
