@@ -1,17 +1,16 @@
-import { useNativeState } from "@expo/ui";
-import { StyleSheet, View } from "react-native";
 import { Header } from "@/components/header";
 import { IconButton } from "@/components/icon-button";
 import { FavoriteRow } from "@/components/location/favorite-row";
 import { SearchLocation } from "@/components/location/search-locations";
 import { ThemedView } from "@/components/themed-view";
 import { useFavoriteLocations } from "@/hooks/use-favorite-locations";
+import { useState } from "react";
+import { StyleSheet, View } from "react-native";
 
 const LocationScreen = () => {
-	const openSearch = useNativeState(false);
+	const [openSearch, setOpenSearch] = useState(false);
 
 	const { favoriteLocations, removeFavorite } = useFavoriteLocations();
-
 	return (
 		<ThemedView style={styles.container}>
 			<Header
@@ -20,15 +19,15 @@ const LocationScreen = () => {
 				rightSlots={
 					<IconButton
 						name="map-search"
-						isActive={openSearch.value}
+						isActive={openSearch}
 						size={20}
 						onPress={() => {
-							openSearch.value = !openSearch.value;
+							setOpenSearch((p) => !p);
 						}}
 					/>
 				}
 			/>
-			{openSearch.value ? (
+			{openSearch ? (
 				<SearchLocation />
 			) : (
 				<View style={styles.favoritesList}>

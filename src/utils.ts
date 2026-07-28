@@ -1,5 +1,7 @@
 /** biome-ignore-all lint/suspicious/noExplicitAny: <Generic debounce function> */
 
+import type { MaterialDesignIconsIconName } from "@react-native-vector-icons/material-design-icons";
+
 export function debounce<T extends (...args: any[]) => any>(
 	func: T,
 	delay: number,
@@ -48,7 +50,7 @@ export const WeatherCodes: Record<number, string> = {
 	99: "Thunderstorm with heavy hail",
 };
 
-export const WeatherIcons: Record<number, string> = {
+export const WeatherIcons: Record<number, MaterialDesignIconsIconName> = {
 	0: "weather-sunny",
 	1: "weather-sunny",
 	2: "weather-partly-cloudy",
