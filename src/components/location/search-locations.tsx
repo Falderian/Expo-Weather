@@ -47,7 +47,13 @@ export const SearchLocation = () => {
 	const locationRow = (loc: TLocation) => {
 		const Icon = getIcon(loc);
 		return (
-			<Pressable key={loc.id} style={[styles.resultRow, { borderBottomColor: theme.backgroundSelected }]}>
+			<Pressable
+				key={loc.id}
+				style={[
+					styles.resultRow,
+					{ borderBottomColor: theme.backgroundSelected },
+				]}
+			>
 				<View style={styles.resultInfo}>
 					<ThemedText type="default">{loc.name}</ThemedText>
 					<ThemedText type="small" themeColor="textSecondary" numberOfLines={1}>
@@ -71,7 +77,10 @@ export const SearchLocation = () => {
 				value={query}
 				placeholder="City name…"
 				onChangeText={handleChangeText}
-				style={[styles.searchInput, { borderColor: theme.backgroundSelected, outlineColor: theme.active }]}
+				style={[
+					styles.searchInput,
+					{ borderColor: theme.backgroundSelected, outlineColor: theme.active },
+				]}
 				placeholderTextColor={theme.textSecondary}
 				autoFocus
 			/>
