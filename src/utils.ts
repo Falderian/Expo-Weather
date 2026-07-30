@@ -1,23 +1,4 @@
-/** biome-ignore-all lint/suspicious/noExplicitAny: <Generic debounce function> */
-
 import type { MaterialDesignIconsIconName } from "@react-native-vector-icons/material-design-icons";
-
-export function debounce<T extends (...args: any[]) => any>(
-	func: T,
-	delay: number,
-): (...args: Parameters<T>) => void {
-	let timeoutId: ReturnType<typeof setTimeout> | undefined;
-
-	return function (this: any, ...args: Parameters<T>) {
-		if (timeoutId) {
-			clearTimeout(timeoutId);
-		}
-
-		timeoutId = setTimeout(() => {
-			func.apply(this, args);
-		}, delay);
-	};
-}
 
 export const WeatherCodes: Record<number, string> = {
 	0: "Clear sky",
@@ -109,5 +90,3 @@ export const getTempColor = (
 	if (temp >= TEMP_HOT) return colors.hot;
 	return colors.mid;
 };
-
-export { PRECIP_WARNING_THRESHOLD } from "@/constants/theme";

@@ -6,9 +6,10 @@ import {
 	TextInput,
 	View,
 } from "react-native";
-import { Colors, Spacing } from "@/constants/theme";
+import { Spacing } from "@/constants/theme";
 import { useFavoriteLocations } from "@/hooks/use-favorite-locations";
 import { useSearchLocations } from "@/hooks/use-search-locations";
+import { useTheme } from "@/hooks/use-theme";
 import type { TLocation } from "@/types";
 import { IconButton } from "../icon-button";
 import { ThemedText } from "../themed-text";
@@ -16,13 +17,13 @@ import { ThemedText } from "../themed-text";
 export const SearchLocation = () => {
 	const [query, setQuery] = useState("");
 	const handleChangeText = useCallback((value: string) => {
-		"worklet";
 		setQuery(value);
 	}, []);
 	const { favoriteLocations, addFavorite, removeFavorite } =
 		useFavoriteLocations();
 
 	const { data, isError, isFetching } = useSearchLocations(query);
+	const theme = useTheme();
 
 	const hasQuery = query.trim().length > 0;
 	const results = data?.results ?? [];
@@ -46,7 +47,7 @@ export const SearchLocation = () => {
 	const locationRow = (loc: TLocation) => {
 		const Icon = getIcon(loc);
 		return (
-			<Pressable key={loc.id} style={styles.resultRow}>
+			<Pressable key={loc.id} style={[styles.resultRow, { borderBottomColor: theme.backgroundSelected }]}>
 				<View style={styles.resultInfo}>
 					<ThemedText type="default">{loc.name}</ThemedText>
 					<ThemedText type="small" themeColor="textSecondary" numberOfLines={1}>
@@ -70,8 +71,8 @@ export const SearchLocation = () => {
 				value={query}
 				placeholder="City name…"
 				onChangeText={handleChangeText}
-				style={styles.searchInput}
-				placeholderTextColor={Colors.dark.textSecondary}
+				style={[styles.searchInput, { borderColor: theme.backgroundSelected, outlineColor: theme.active }]}
+				placeholderTextColor={theme.textSecondary}
 				autoFocus
 			/>
 			<View style={styles.resultsContainer}>
@@ -110,9 +111,7 @@ const styles = StyleSheet.create({
 		paddingVertical: Spacing.one,
 		borderRadius: Spacing.one,
 		borderWidth: 1,
-		borderColor: Colors.light.backgroundSelected,
 		outlineWidth: 1,
-		outlineColor: Colors.light.active,
 	},
 
 	resultsContainer: {
@@ -132,7 +131,6 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		paddingVertical: Spacing.three,
 		borderBottomWidth: StyleSheet.hairlineWidth,
-		borderBottomColor: Colors.dark.backgroundSelected,
 	},
 	resultInfo: {
 		flex: 1,

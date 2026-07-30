@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
+import { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { ScreenContainer } from "@/components/ScreenContainer";
 import { ThemedView } from "@/components/themed-view";
@@ -13,6 +14,9 @@ export const unstable_settings = {
 };
 
 export default function RootLayout() {
+	useEffect(() => {
+		SplashScreen.hide();
+	}, []);
 	return (
 		<QueryClientProvider client={queryClient}>
 			<ScreenContainer>

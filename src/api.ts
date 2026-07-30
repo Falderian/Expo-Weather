@@ -1,6 +1,4 @@
 class Api {
-	apiKey = process.env.EXPO_PUBLIC_OPEN_WEATHER_API;
-
 	forecastUrl = "https://api.open-meteo.com/v1/forecast";
 	searchLoactionUrl = "https://geocoding-api.open-meteo.com/v1/search";
 
