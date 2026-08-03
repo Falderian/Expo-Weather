@@ -1,34 +1,33 @@
-import { router } from "expo-router";
+import { router, useTheme } from "expo-router";
 import type { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
-import { IconButton } from "@/components/icon-button";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Spacing } from "@/constants/theme";
+import { useCurrentLocation } from "@/hooks/use-current-location";
 
 export type HeaderProps = {
-	title: string;
-	subtitle?: string;
 	rightSlots?: ReactNode;
 	onBackPress?: () => void;
-	showBack?: boolean;
 };
 
-export const Header = ({
-	title,
-	subtitle,
-	rightSlots,
-	onBackPress,
-	showBack,
-}: HeaderProps) => {
-	const handleBack = onBackPress ?? (() => router.back());
+export const Header = ({ rightSlots, onBackPress }: HeaderProps) => {
+	const theme = useTheme();
+
+	const { currentLocation } = useCurrentLocation();
+	const title = currentLocation?.name || "-";
+	const subtitle = "Current Location";
 
 	return (
-		<ThemedView type="background" style={styles.container}>
+		<ThemedView
+			type="background"
+			style={{
+				...styles.container,
+				borderBottomColor: theme.colors.background,
+				borderBottomWidth: 2,
+			}}
+		>
 			<View style={styles.leftSide}>
-				{showBack && (
-					<IconButton name="arrow-left" size={24} onPress={handleBack} />
-				)}
 				<View style={styles.titleGroup}>
 					<ThemedText type="default" numberOfLines={1} style={styles.title}>
 						{title}
@@ -53,8 +52,7 @@ export const Header = ({
 const styles = StyleSheet.create({
 	container: {
 		flexDirection: "row",
-		alignItems: "flex-start",
-		justifyContent: "space-between",
+		alignItems: "center",
 	},
 	leftSide: {
 		flexDirection: "row",

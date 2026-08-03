@@ -8,19 +8,14 @@ interface Props {
 	edges?: ("top" | "bottom" | "left" | "right")[];
 }
 
-export const ScreenContainer = ({
-	children,
-	style,
-	edges = ["top", "bottom"],
-}: Props) => {
+export const ScreenContainer = ({ children, style }: Props) => {
 	const insets = useSafeAreaInsets();
 	return (
 		<ThemedView
 			style={[
 				styles.container,
 				{
-					paddingTop: edges.includes("top") ? insets.top : 0,
-					paddingBottom: edges.includes("bottom") ? insets.bottom : 0,
+					paddingTop: insets.top,
 				},
 				style,
 			]}
@@ -31,5 +26,5 @@ export const ScreenContainer = ({
 };
 
 const styles = StyleSheet.create({
-	container: { flex: 1 },
+	container: { flex: 1, paddingHorizontal: 20 },
 });

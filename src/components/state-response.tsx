@@ -4,17 +4,17 @@ import { useTheme } from "@/hooks/use-theme";
 import { ThemedText } from "./themed-text";
 import { ThemedView } from "./themed-view";
 
-type ForecastStateProps =
-	| { state: "loading" }
-	| { state: "error"; onRetry: () => void };
+type StateResponseProps =
+	| { state: "loading"; loadingMessage?: string }
+	| { state: "error"; errorMessage?: string; onRetry: () => void };
 
-export const ForecastState = (props: ForecastStateProps) => {
+export const StateResponse = (props: StateResponseProps) => {
 	const theme = useTheme();
 
 	if (props.state === "loading") {
 		return (
 			<ThemedView style={styles.center}>
-				<ThemedText>Loading forecast…</ThemedText>
+				<ThemedText>{props.loadingMessage ?? "Loading…"}</ThemedText>
 			</ThemedView>
 		);
 	}
@@ -30,7 +30,7 @@ export const ForecastState = (props: ForecastStateProps) => {
 				themeColor="textSecondary"
 				style={{ textAlign: "center", marginBottom: 12 }}
 			>
-				Failed to load forecast
+				{props.errorMessage ?? "Something went wrong"}
 			</ThemedText>
 			<TouchableOpacity
 				onPress={props.onRetry}

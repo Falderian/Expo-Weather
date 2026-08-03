@@ -15,7 +15,6 @@ export const useSearchLocations = (query: string) => {
 		query: string,
 	): Promise<TSearchLocationsResponse> => {
 		if (!query) return { results: [], generationtime_ms: 0 };
-
 		const response = await fetch(
 			`${api.searchLoactionUrl}?name=${encodeURIComponent(query)}`,
 		);

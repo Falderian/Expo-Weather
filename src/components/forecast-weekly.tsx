@@ -4,7 +4,7 @@ import { Spacing } from "@/constants/theme";
 import { useCurrentLocation } from "@/hooks/use-current-location";
 import { useLocationWeeklyForecast } from "@/hooks/use-location-weekly-forecast";
 import { WeeklyRow } from "./forecast/WeeklyRow";
-import { ForecastState } from "./forecast-state";
+import { StateResponse } from "./state-response";
 import { ThemedText } from "./themed-text";
 import { ThemedView } from "./themed-view";
 
@@ -15,9 +15,9 @@ export const ForecastWeekly = () => {
 
 	const todayStr = useMemo(() => new Date().toLocaleDateString("en-CA"), []);
 
-	if (isLoading) return <ForecastState state="loading" />;
+	if (isLoading) return <StateResponse state="loading" />;
 	if (isError || !dailyData.length)
-		return <ForecastState state="error" onRetry={() => refetch?.()} />;
+		return <StateResponse state="error" onRetry={() => refetch?.()} />;
 
 	return (
 		<ThemedView style={styles.container}>

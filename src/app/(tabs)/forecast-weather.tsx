@@ -1,13 +1,13 @@
 import { FlatList, StyleSheet } from "react-native";
+import { ForecastWeekly } from "@/components/forecast-weekly";
+import { HourlyColumn } from "@/components/hourly-weather-column";
+import { StateResponse } from "@/components/state-response";
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 import { useCurrentLocation } from "@/hooks/use-current-location";
 import { useLocationForecast } from "@/hooks/use-location-forecast";
-import { ForecastWeekly } from "./forecast-weekly";
-import { HourlyColumn } from "./hourly-weather-column";
-import { StateResponse } from "./state-response";
-import { ThemedText } from "./themed-text";
-import { ThemedView } from "./themed-view";
 
-export const ForecastWeather = () => {
+const ForecastWeatherTab = () => {
 	const { currentLocation } = useCurrentLocation();
 	const { hourlyData, currentHourIndex, isLoading, isError, refetch } =
 		useLocationForecast(currentLocation);
@@ -66,3 +66,5 @@ const styles = StyleSheet.create({
 		gap: 8,
 	},
 });
+
+export default ForecastWeatherTab;
