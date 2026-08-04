@@ -1,7 +1,9 @@
 import { useTheme } from "expo-router";
 import { useCallback, useState } from "react";
-import { FlatList, Pressable, StyleSheet, TextInput, View } from "react-native";
+import { FlatList, StyleSheet, TextInput, View } from "react-native";
 import { IconButton } from "@/components/icon-button";
+import { FavoriteRow } from "@/components/location/favorite-row";
+import { SearchResultRow } from "@/components/location/search-result-row";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Spacing } from "@/constants/theme";
@@ -42,46 +44,26 @@ const LocationScreen = () => {
 	const showEmpty =
 		!isFetching && !isError && query.trim().length > 0 && results.length === 0;
 
-	const getActionIcon = useCallback(
-		(loc: TLocation) => {
-			if (isFavoritesMode) {
-				return (
-					<IconButton name="minus" onPress={() => removeFavorite(loc.id)} />
-				);
-			} else {
-				const isFavorite = favoriteLocations.some((el) => el.id === loc.id);
-				const name = isFavorite ? "minus" : "plus";
-				const action = isFavorite
-					? () => removeFavorite(loc.id)
-					: () => addFavorite(loc);
-				return <IconButton name={name} onPress={action} />;
-			}
-		},
+	const renderRow = useCallback(
+		({ item }: { item: TLocation }) =>
+			isFavoritesMode ? (
+				<FavoriteRow
+					location={item}
+					removeFavorite={() => removeFavorite(item.id)}
+				/>
+			) : (
+				<SearchResultRow
+					location={item}
+					isFavorite={favoriteLocations.some((el) => el.id === item.id)}
+					onToggleFavorite={(loc) =>
+						favoriteLocations.some((el) => el.id === loc.id)
+							? removeFavorite(loc.id)
+							: addFavorite(loc)
+					}
+				/>
+			),
 		[isFavoritesMode, favoriteLocations, addFavorite, removeFavorite],
 	);
-
-	const renderLocationRow = ({ item }: { item: TLocation }) => {
-		const icon = getActionIcon(item);
-		return (
-			<Pressable
-				style={[styles.resultRow, { borderBottomColor: colors.background }]}
-			>
-				<View style={styles.resultInfo}>
-					<ThemedText type="default">{item.name}</ThemedText>
-					<ThemedText type="small" themeColor="textSecondary" numberOfLines={1}>
-						{[item.admin1, item.country].filter(Boolean).join(", ")}
-					</ThemedText>
-				</View>
-				<ThemedText
-					type="smallBold"
-					themeColor="textSecondary"
-					style={styles.countryCode}
-				>
-					{icon}
-				</ThemedText>
-			</Pressable>
-		);
-	};
 
 	return (
 		<ThemedView style={styles.container}>
@@ -130,7 +112,7 @@ const LocationScreen = () => {
 				{results.length > 0 && (
 					<FlatList
 						data={results}
-						renderItem={renderLocationRow}
+						renderItem={renderRow}
 						keyExtractor={(item) => item.id.toString()}
 						contentContainerStyle={styles.listContent}
 						showsVerticalScrollIndicator={false}
@@ -183,18 +165,5 @@ const styles = StyleSheet.create({
 	},
 	listContent: {
 		paddingBottom: Spacing.two,
-	},
-	resultRow: {
-		flexDirection: "row",
-		alignItems: "center",
-		paddingVertical: Spacing.three,
-		borderBottomWidth: StyleSheet.hairlineWidth,
-	},
-	resultInfo: {
-		flex: 1,
-	},
-	countryCode: {
-		marginLeft: Spacing.two,
-		opacity: 0.5,
 	},
 });
