@@ -1,4 +1,4 @@
-import { router, useTheme } from "expo-router";
+import { useTheme } from "expo-router";
 import type { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/themed-text";
@@ -8,10 +8,9 @@ import { useCurrentLocation } from "@/hooks/use-current-location";
 
 export type HeaderProps = {
 	rightSlots?: ReactNode;
-	onBackPress?: () => void;
 };
 
-export const Header = ({ rightSlots, onBackPress }: HeaderProps) => {
+export const Header = ({ rightSlots }: HeaderProps) => {
 	const theme = useTheme();
 
 	const { currentLocation } = useCurrentLocation();

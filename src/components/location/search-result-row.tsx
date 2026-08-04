@@ -24,11 +24,7 @@ export const SearchResultRow = ({
 		>
 			<View style={styles.resultInfo}>
 				<ThemedText type="default">{location.name}</ThemedText>
-				<ThemedText
-					type="small"
-					themeColor="textSecondary"
-					numberOfLines={1}
-				>
+				<ThemedText type="small" themeColor="textSecondary" numberOfLines={1}>
 					{[location.admin1, location.country].filter(Boolean).join(", ")}
 				</ThemedText>
 			</View>
