@@ -13,7 +13,7 @@ import type { TLocation } from "@/types";
 
 type SearchMode = "favorites" | "api";
 
-const LocationScreen = () => {
+const LocationTab = () => {
 	const [query, setQuery] = useState("");
 	const [mode, setMode] = useState<SearchMode>("favorites");
 	const { colors } = useTheme();
@@ -130,7 +130,7 @@ const LocationScreen = () => {
 	);
 };
 
-export default LocationScreen;
+export default LocationTab;
 
 const styles = StyleSheet.create({
 	container: {

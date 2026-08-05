@@ -47,6 +47,19 @@ const TabLayout = () => {
 					),
 				}}
 			/>
+			<Tabs.Screen
+				name="ai"
+				options={{
+					title: "AI",
+					tabBarIcon: ({ color }) => (
+						<MaterialDesignIcons
+							size={28}
+							name="creation-outline"
+							color={color}
+						/>
+					),
+				}}
+			/>
 		</Tabs>
 	);
 };
