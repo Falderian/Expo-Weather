@@ -11,44 +11,45 @@ interface AiResponse {
 }
 
 const systemPrompt = `
-You are a weather analyst in a consumer app. The user sends their forecast as JSON.
+You are a Weather Strategist. Analyze the JSON forecast and return a JSON array of behavioral "heads-ups".
 
-Your goal is to provide a concise, scannable list of "heads-ups" for things that change a user's daily behavior (clothing, gear, or planning).
+Strict Constraints:
+- Output ONLY a raw JSON array. No markdown formatting, no backticks, no intro.
+- Convert dates (e.g., "2026-08-06") to day names. 
+- Do not group, there should be always exactly 7 days.
+- Only include days that trigger advice (Temp drops >5°C, heat >30°C, wind >30km/h, or rain).
+- If weather is stable, return an empty array [].
 
-Formatting Rules:
-- Output ONLY the final advice. 
-- DO NOT explain your reasoning. 
-- DO NOT show your "thinking process" or analysis.
-- DO NOT mention the dates or weather codes in your response.
-- Format: Each point on a new line: "[Emoji] **[Keyword]**: [Practical Advice]"
-- If nothing changes a decision, output exactly: "Nothing to plan around."
-
-Context Rules:
-- Judge contextually: light summer rain may not matter; rain at 4°C with wind does.
-- Use only the data provided. Do not invent values.
-- Never declare severe weather or hazards. Give practical advice only.
-- Total length: Under 60 words.
-
-Example Output:
-☀️ **Sunscreen**: High heat today, stay hydrated.
-☔ **Umbrella**: Heavy rain starting at 2pm.
-🧥 **Light Jacket**: Chilly evening, drops to 12°C.
+JSON Schema:
+[
+  {
+    "days": "Day or Range",
+    "emoji": "Relevant Emoji",
+    "advice": "Punchy, actionable advice",
+    "severity": "low" | "medium" | "high"
+  }
+]
 `;
 
+interface WeatherAdvice {
+	days: string;
+	emoji: string;
+	advice: string;
+	severity: "low" | "medium" | "high";
+}
+
 export const useAiRequest = () => {
-	const apiKey = process.env.EXPO_PUBLIC_OPENROUTER_APIKEY;
-	const url = "https://openrouter.ai/api/v1/chat/completions";
-	const model = "openrouter/free";
+	const apiKey = process.env.EXPO_PUBLIC_HUGGINGFACE_API;
+	const url = "https://router.huggingface.co/v1/chat/completions";
+	const model = "meta-llama/Llama-3.1-8B-Instruct";
 
 	const { mutate, data, isPending, isError, error, reset } = useMutation<
-		string,
+		WeatherAdvice[], // Changed from string
 		Error,
 		{ text: string }
 	>({
 		mutationFn: async ({ text }) => {
-			if (!apiKey) {
-				throw new Error("Ai API key is missing");
-			}
+			if (!apiKey) throw new Error("Ai API key is missing");
 
 			const response = await fetch(url, {
 				method: "POST",
@@ -59,32 +60,21 @@ export const useAiRequest = () => {
 				body: JSON.stringify({
 					model,
 					messages: [
-						{
-							role: "system",
-							content: systemPrompt,
-						},
-						{
-							role: "user",
-							content: text,
-						},
+						{ role: "system", content: systemPrompt },
+						{ role: "user", content: text },
 					],
-					temperature: 0.5,
-					max_completion_tokens: 300,
+					temperature: 0.3,
 				}),
 			});
 
 			const result = await response.json();
+			const content = (result as AiResponse).choices[0].message.content;
 
-			if (!response.ok) {
-				const detail = result?.error?.message
-					? `: ${result.error.message}`
-					: "";
-				throw new Error(
-					`Request failed: ${response.status} ${response.statusText}${detail}`,
-				);
+			try {
+				return JSON.parse(content);
+			} catch (_: unknown) {
+				throw new Error("AI returned invalid JSON format");
 			}
-
-			return (result as AiResponse).choices[0].message.content;
 		},
 	});
 
