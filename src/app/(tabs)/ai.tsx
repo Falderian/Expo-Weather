@@ -4,7 +4,7 @@ import {
 	StyleSheet,
 	TouchableOpacity,
 	View,
-} from "react-native"; // Added ScrollView
+} from "react-native";
 import { ForecastCard } from "@/components/forecast/ForecastCard";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
@@ -101,6 +101,12 @@ const AiTab = () => {
 					)}
 				</ThemedView>
 			)}
+
+			<View style={styles.footer}>
+				<ThemedText style={styles.footerText}>
+					AI can make mistakes. Please verify with a weekly forecast.
+				</ThemedText>
+			</View>
 		</ThemedView>
 	);
 };
@@ -185,6 +191,15 @@ const styles = StyleSheet.create({
 		color: "white",
 		fontWeight: "600",
 		fontSize: 14,
+	},
+	footer: {
+		marginTop: "auto",
+		paddingBottom: 10,
+	},
+	footerText: {
+		fontSize: 12,
+		opacity: 0.5,
+		textAlign: "center",
 	},
 });
 

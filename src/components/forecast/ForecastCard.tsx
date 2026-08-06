@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
-import type { ViewStyle } from "react-native";
-
+import type { StyleProp, ViewStyle } from "react-native";
 import { rgba } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
 import { ThemedView } from "../themed-view";
@@ -8,7 +7,7 @@ import { ThemedView } from "../themed-view";
 interface ForecastCardProps {
 	isCurrent?: boolean;
 	isWarning?: boolean;
-	style?: ViewStyle;
+	style?: StyleProp<ViewStyle>;
 	children: ReactNode;
 }
 
