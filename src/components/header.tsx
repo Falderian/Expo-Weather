@@ -1,4 +1,4 @@
-import { useTheme } from "expo-router";
+import { Link, useTheme } from "expo-router";
 import type { ReactNode } from "react";
 import { StyleSheet, View } from "react-native";
 import { ThemedText } from "@/components/themed-text";
@@ -26,22 +26,24 @@ export const Header = ({ rightSlots }: HeaderProps) => {
 				borderBottomWidth: 2,
 			}}
 		>
-			<View style={styles.leftSide}>
-				<View style={styles.titleGroup}>
-					<ThemedText type="default" numberOfLines={1} style={styles.title}>
-						{title}
-					</ThemedText>
-					{subtitle && (
-						<ThemedText
-							type="small"
-							numberOfLines={1}
-							themeColor="textSecondary"
-						>
-							{subtitle}
+			<Link href="/location">
+				<View style={styles.leftSide}>
+					<View style={styles.titleGroup}>
+						<ThemedText type="default" numberOfLines={1} style={styles.title}>
+							{title}
 						</ThemedText>
-					)}
+						{subtitle && (
+							<ThemedText
+								type="small"
+								numberOfLines={1}
+								themeColor="textSecondary"
+							>
+								{subtitle}
+							</ThemedText>
+						)}
+					</View>
 				</View>
-			</View>
+			</Link>
 
 			<View style={styles.rightSide}>{rightSlots}</View>
 		</ThemedView>
