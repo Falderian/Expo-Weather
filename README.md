@@ -1,10 +1,37 @@
-# Welcome to your Expo app 👋
+# Expo Weather
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A weather app built with Expo and React Native.
 
-No AI used in development proccess.
+---
 
-## Get started
+## Features
+
+- **Current Weather** — Temperature, feels like, wind, humidity, pressure, visibility, cloud cover, dew point, sunrise/sunset
+- **Hourly Forecast** — Scrollable 24-hour forecast with snap-to-hour, precipitation warnings
+- **7-Day Forecast** — Weekly outlook with high/low temps, precipitation, wind, sunrise/sunset
+- **Location Search** — Search cities worldwide via Open-Meteo geocoding API
+- **Favorites** — Save locations, view live weather previews, switch active location
+- **AI Insights** — Llama 3.1-powered weather advice with severity levels
+- **Dark/Light Theme** — Automatic system theme detection
+
+---
+
+## Tech Stack
+
+| Technology | Purpose |
+|------------|---------|
+| Expo ~57 | Managed workflow platform |
+| React Native 0.86 | Mobile UI framework |
+| React 19 | UI library |
+| Expo Router | File-based navigation (tabs) |
+| Zustand | Global state (favorites + current location) |
+| React Query | Server state, caching, refetching |
+| Open-Meteo API | Weather data (free, no API key) |
+| Biome | Linting and formatting |
+
+---
+
+## Get Started
 
 1. Install dependencies
 
@@ -18,41 +45,58 @@ No AI used in development proccess.
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+3. Open in:
+   - [Expo Go](https://expo.dev/go) (limited sandbox)
+   - [Development build](https://docs.expo.dev/develop/development-builds/introduction/)
+   - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+   - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Project Structure
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+src/
+├── app/                    # Expo Router screens (tabs)
+│   ├── (tabs)/
+│   │   ├── index.tsx              # Current weather
+│   │   ├── forecast-weather.tsx   # Hourly + weekly forecast
+│   │   ├── location.tsx           # Search & favorites
+│   │   └── ai.tsx                 # AI weather insights
+│   └── _layout.tsx         # Root layout (providers)
+├── components/             # Reusable UI components
+├── hooks/                  # Custom React hooks
+├── store.ts                # Zustand stores
+├── types.ts                # TypeScript types
+├── utils.ts                # Weather code maps, helpers
+└── api.ts                  # Open-Meteo API builder
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-### Other setup steps
+## Documentation
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+Future features and roadmap are documented in [`docs/features/`](./docs/features/).
 
-## Learn more
+| Document | Description |
+|----------|-------------|
+| [Feature Index](./docs/features/README.md) | All planned features |
+| [High Priority](./docs/features/high-priority.md) | GPS, alerts, widgets, pull-to-refresh |
+| [Medium Priority](./docs/features/medium-priority.md) | Maps, AQI, history, i18n |
+| [Nice-to-Have](./docs/features/nice-to-have.md) | Lottie icons, caching, theming, sharing |
+| [API Reference](./docs/features/api-reference.md) | Open-Meteo endpoints |
+| [Dependencies](./docs/features/dependencies.md) | Packages to install |
 
-To learn more about developing your project with Expo, look at the following resources:
+---
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+## Learn More
 
-## Join the community
+- [Expo documentation](https://docs.expo.dev/)
+- [Expo Router](https://docs.expo.dev/router/introduction)
+- [Open-Meteo API](https://open-meteo.com/)
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## License
+
+See [LICENSE](./LICENSE) for details.
