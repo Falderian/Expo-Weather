@@ -1,14 +1,16 @@
-import { useTheme } from "expo-router";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { FlatList, StyleSheet, TextInput, View } from "react-native";
 import { IconButton } from "@/components/icon-button";
 import { FavoriteRow } from "@/components/location/favorite-row";
 import { SearchResultRow } from "@/components/location/search-result-row";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { UserLocation } from "@/components/user-location";
 import { Spacing } from "@/constants/theme";
 import { useFavoriteLocations } from "@/hooks/use-favorite-locations";
 import { useSearchLocations } from "@/hooks/use-search-locations";
+import { useTheme } from "@/hooks/use-theme";
+import { Store } from "@/store";
 import type { TLocation } from "@/types";
 
 type SearchMode = "favorites" | "api";
@@ -16,7 +18,7 @@ type SearchMode = "favorites" | "api";
 const LocationTab = () => {
 	const [query, setQuery] = useState("");
 	const [mode, setMode] = useState<SearchMode>("favorites");
-	const { colors } = useTheme();
+	const theme = useTheme();
 
 	const { favoriteLocations, addFavorite, removeFavorite } =
 		useFavoriteLocations();
@@ -65,6 +67,12 @@ const LocationTab = () => {
 		[isFavoritesMode, favoriteLocations, addFavorite, removeFavorite],
 	);
 
+	const userLocation = useRef(null);
+
+	const location = Store.getObject("my-location").then(
+		(res) => (userLocation.current = res),
+	);
+
 	return (
 		<ThemedView style={styles.container}>
 			<View style={styles.searchContainer}>
@@ -79,11 +87,11 @@ const LocationTab = () => {
 					style={[
 						styles.searchInput,
 						{
-							borderColor: colors.primary,
-							outlineColor: colors.primary.toString(),
+							borderColor: theme.active,
+							outlineColor: theme.active,
 						},
 					]}
-					placeholderTextColor={colors.text}
+					placeholderTextColor={theme.text}
 					autoFocus
 				/>
 				<IconButton
@@ -108,6 +116,11 @@ const LocationTab = () => {
 							{isFavoritesMode ? "No matching favorites." : "No cities found."}
 						</ThemedText>
 					</View>
+				)}
+
+				{!isFavoritesMode && <UserLocation />}
+				{location && (
+					<ThemedText>{JSON.stringify(userLocation.current)}</ThemedText>
 				)}
 				{results.length > 0 && (
 					<FlatList

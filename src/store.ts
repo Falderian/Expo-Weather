@@ -1,4 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getItemAsync, setItemAsync } from "expo-secure-store";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import type { TLocation } from "@/types";
@@ -48,3 +49,19 @@ export const useCurrentLocationStore = create<CurrentLocationState>()(
 		},
 	),
 );
+
+export const Store = {
+	save: async (key: string, value: string) => {
+		return await setItemAsync(key, value);
+	},
+
+	get: async (key: string) => {
+		return await getItemAsync(key);
+	},
+
+	getObject: async (key: string) => {
+		const value = await getItemAsync(key);
+		if (!value) return "";
+		return JSON.parse(value);
+	},
+};

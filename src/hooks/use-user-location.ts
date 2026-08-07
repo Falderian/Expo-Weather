@@ -3,19 +3,28 @@ import {
 	getCurrentPositionAsync,
 	requestForegroundPermissionsAsync,
 } from "expo-location";
+import { Store } from "@/store";
 
 export const useUserLocation = () => {
-	return useQuery({
+	const { data, error, isLoading, refetch } = useQuery({
 		queryKey: ["userLocation"],
 		queryFn: async () => {
 			const { status } = await requestForegroundPermissionsAsync();
 			if (status !== "granted") {
 				throw new Error("Permission to access location was denied");
 			}
-
-			return await getCurrentPositionAsync({});
+			const location = await getCurrentPositionAsync({});
+			await Store.save("my-location", JSON.stringify(location));
+			return location;
 		},
 		enabled: false,
 		staleTime: 0,
 	});
+
+	return {
+		requestLocation: refetch,
+		location: data,
+		error,
+		isLoading,
+	};
 };

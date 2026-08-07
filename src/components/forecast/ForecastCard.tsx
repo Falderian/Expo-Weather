@@ -1,14 +1,14 @@
 import type { ReactNode } from "react";
-import type { StyleProp, ViewStyle } from "react-native";
+import { type StyleProp, TouchableOpacity, type ViewStyle } from "react-native";
 import { rgba } from "@/constants/theme";
 import { useTheme } from "@/hooks/use-theme";
-import { ThemedView } from "../themed-view";
 
 interface ForecastCardProps {
 	isCurrent?: boolean;
 	isWarning?: boolean;
-	style?: StyleProp<ViewStyle>;
 	children: ReactNode;
+	style?: StyleProp<ViewStyle>;
+	onPress?: () => void;
 }
 
 export const ForecastCard = ({
@@ -16,12 +16,17 @@ export const ForecastCard = ({
 	isWarning,
 	style,
 	children,
+	onPress,
 }: ForecastCardProps) => {
 	const theme = useTheme();
 	const purple = theme.accentPurple;
 	const cyan = theme.accentCyan;
+
 	return (
-		<ThemedView
+		<TouchableOpacity
+			activeOpacity={onPress ? 0.7 : 1}
+			disabled={!onPress}
+			onPress={onPress}
 			style={[
 				{
 					borderWidth: 2,
@@ -40,6 +45,6 @@ export const ForecastCard = ({
 			]}
 		>
 			{children}
-		</ThemedView>
+		</TouchableOpacity>
 	);
 };
